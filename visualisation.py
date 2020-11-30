@@ -5,10 +5,8 @@ import sklearn
 import scipy
 import matplotlib.pyplot as plt
 import seaborn as sns
-from sklearn.metrics import classification_report, accuracy_score
+from sklearn.metrics import classification_report, accuracy_score, confusion_matrix
 from sklearn.ensemble import IsolationForest
-from sklearn.neighbors import LocalOutlierFactor
-from sklearn.svm import OneClassSVM
 # %%
 RANDOM_SEED = 42
 LABELS = ["normal", "fraud"]
@@ -87,5 +85,11 @@ y_pred[y_pred == -1] = 1
 n_errors = (y_pred != Y).sum()
 # %%
 print(accuracy_score(Y, y_pred))
+print(n_errors)
 print(classification_report(Y, y_pred))
 # %%
+confmat = confusion_matrix(Y, y_pred)
+print(confmat)
+
+# %%
+sns.heatmap(confmat, annot=True)
