@@ -73,3 +73,19 @@ X = dataset_sample[columns]
 Y = dataset_sample[target]
 
 # %%
+fraud_sample = dataset_sample[dataset_sample["Class"] == 1]
+normal_sample = dataset_sample[dataset_sample["Class"] == 0]
+outlier_fraction = len(fraud_sample)/float(len(normal_sample))
+print(outlier_fraction)
+# %%
+IFclassifier = IsolationForest(n_estimators=100, max_samples=len(
+    X), contamination=outlier_fraction, random_state=state)
+y_pred = IFclassifier.fit_predict(X)
+scores = IFclassifier.decision_function(X)
+y_pred[y_pred == 1] = 0
+y_pred[y_pred == -1] = 1
+n_errors = (y_pred != Y).sum()
+# %%
+print(accuracy_score(Y, y_pred))
+print(classification_report(Y, y_pred))
+# %%
