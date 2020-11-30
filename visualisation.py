@@ -57,3 +57,19 @@ plt.xlabel("Time")
 plt.ylabel("Amount")
 plt.show()
 # %%
+dataset_sample = dataset.sample(frac=0.1, random_state=RANDOM_SEED)
+dataset_sample.shape
+# %%
+corrmat = dataset_sample.corr()
+top_features = corrmat.index
+g = sns.heatmap(dataset_sample[top_features].corr(), cmap="RdYlGn")
+# %%
+columns = dataset_sample.columns.tolist()
+columns = [c for c in columns if c not in ["Class"]]
+target = "Class"
+# %%
+state = np.random.RandomState(RANDOM_SEED)
+X = dataset_sample[columns]
+Y = dataset_sample[target]
+
+# %%
