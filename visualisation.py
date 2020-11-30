@@ -47,3 +47,13 @@ plt.ylabel("Frequency")
 plt.yscale('log')
 plt.show()
 # %%
+f, (ax1, ax2) = plt.subplots(2, 1, sharex=True)
+f.suptitle("Transaction Amount VS Transaction Time")
+ax1.scatter(fraud.Time, fraud.Amount)
+ax1.set_title("Fraud")
+ax2.scatter(normal.Time, normal.Amount)
+ax2.set_title("Normal")
+plt.xlabel("Time")
+plt.ylabel("Amount")
+plt.show()
+# %%
