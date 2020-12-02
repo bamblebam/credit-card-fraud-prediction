@@ -25,6 +25,7 @@ from imblearn.metrics import classification_report_imbalanced
 from sklearn.metrics import precision_score, recall_score, f1_score, roc_auc_score, accuracy_score, classification_report
 from collections import Counter
 from sklearn.model_selection import KFold, StratifiedKFold
+from sklearn.preprocessing import RobustScaler
 
 # %%
 dataset = pd.read_csv('./dataset/creditcard.csv')
@@ -32,14 +33,12 @@ dataset.head()
 # %%
 dataset.describe()
 # %%
-pca = PCA()
-dataset['scaled_amount'] = pca.fit_transform(
+robustScaler = RobustScaler()
+dataset['scaled_amount'] = robustScaler.fit_transform(
     dataset['Amount'].values.reshape(-1, 1))
-dataset['scaled_time'] = pca.fit_transform(
+dataset['scaled_time'] = robustScaler.fit_transform(
     dataset['Time'].values.reshape(-1, 1))
 # %%
-scaled_amount = dataset['scaled_amount']
-scaled_time = dataset['scaled_time']
 dataset.drop(['Amount', 'Time'], axis=1, inplace=True)
 dataset.head()
 # %%

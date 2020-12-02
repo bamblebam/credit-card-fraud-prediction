@@ -10,4 +10,4 @@ From the confusion matrix it is clear that the prediction for majority of non fr
 
 ## Sub-sampling method
 Since the dataset is imbalanced we will need to perform some balancing techniques so that our model doesn't just assume that it is not a fraud.  
-First since the Time and Amount column have not been dimensionally reduced we do so using PCA.
+First since the Time and Amount column have not been dimensionally reduced or scaled we scale it using RobustScaler.
