@@ -70,3 +70,28 @@ nd_dataset = pd.concat([fraud, normal])
 nd_dataset = nd_dataset.sample(frac=1, random_state=42)
 nd_dataset.head()
 # %%
+sns.countplot('Class', data=nd_dataset)
+plt.title("Distribution of classes")
+plt.show()
+# %%
+corr = nd_dataset.corr()
+sns.heatmap(corr, cmap='coolwarm_r', annot_kws={'size': 20})
+plt.show()
+
+# %%
+positive_corr = ["V2", "V4", "V11", "V19"]
+negative_corr = ["V10", "V12", "V14", "V16"]
+# %%
+f, axes = plt.subplots(ncols=4, figsize=(20, 4))
+f.suptitle("Positive Correlation")
+for i, feature in enumerate(positive_corr):
+    sns.boxplot(x="Class", y=feature, data=nd_dataset, ax=axes[i])
+    axes[i].set_title("Class VS " + feature)
+
+# %%
+f, axes = plt.subplots(ncols=4, figsize=(20, 4))
+f.suptitle("Negative Correlation")
+for i, feature in enumerate(negative_corr):
+    sns.boxplot(x="Class", y=feature, data=nd_dataset, ax=axes[i])
+    axes[i].set_title("Class VS " + feature)
+# %%
