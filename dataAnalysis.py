@@ -95,3 +95,5 @@ for i, feature in enumerate(negative_corr):
     sns.boxplot(x="Class", y=feature, data=nd_dataset, ax=axes[i])
     axes[i].set_title("Class VS " + feature)
 # %%
+corr['Class'].sort_values()
+# %%
