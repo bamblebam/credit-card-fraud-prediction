@@ -42,3 +42,24 @@ dataset['scaled_time'] = robustScaler.fit_transform(
 dataset.drop(['Amount', 'Time'], axis=1, inplace=True)
 dataset.head()
 # %%
+X = dataset.drop(['Class'], axis=1)
+Y = dataset['Class']
+# %%
+SKfold = StratifiedKFold(random_state=42)
+for train_index, test_index in SKfold.split(X, Y):
+    og_X_train, og_X_test = X.iloc[train_index], X.iloc[test_index]
+    og_Y_train, og_Y_test = Y.iloc[train_index], Y.iloc[test_index]
+
+# %%
+og_X_train = og_X_train.values
+og_X_test = og_X_test.values
+og_Y_train = og_Y_train.values
+og_Y_test = og_Y_test.values
+
+# %%
+unique_train, train_count = np.unique(og_Y_train, return_counts=True)
+unique_test, test_count = np.unique(og_Y_test, return_counts=True)
+
+print(train_count/len(og_Y_train))
+print(test_count/len(og_Y_test))
+# %%
