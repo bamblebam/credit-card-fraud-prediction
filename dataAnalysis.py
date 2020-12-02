@@ -63,3 +63,10 @@ unique_test, test_count = np.unique(og_Y_test, return_counts=True)
 print(train_count/len(og_Y_train))
 print(test_count/len(og_Y_test))
 # %%
+dataset = dataset.sample(frac=1, random_state=42)
+fraud = dataset.loc[dataset['Class'] == 1]
+normal = dataset.loc[dataset['Class'] == 0][:492]
+nd_dataset = pd.concat([fraud, normal])
+nd_dataset = nd_dataset.sample(frac=1, random_state=42)
+nd_dataset.head()
+# %%
