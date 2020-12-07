@@ -21,4 +21,10 @@ After using a bunch of classifiers we get the cross_val_score as:-
 2. K Nearest Neighbours: 90.62%
 3. Support Vector Classifier: 90.05%
 4. Decision Tree Classifier: 86.92%
-But if we look at the max score instead of the mean we find that Logistic Regression did the best along with KNN at 94.29%
+But if we look at the max score instead of the mean we find that Logistic Regression did the best along with KNN at 94.29%  .
+After hyperparameter optimization using GridSearchCV the scores are:-
+1. Logistic Regression: 95.59%
+2. K Nearest Neighbours: 96.18%
+3. Support Vector Classifier: 94.71%
+4. Decision Tree Classifier: 95.59%
+Looking at the scores we find that KNN give the best accuracy followed by Logistic Regression.

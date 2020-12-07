@@ -24,7 +24,7 @@ from imblearn.under_sampling import NearMiss
 from imblearn.metrics import classification_report_imbalanced
 from sklearn.metrics import precision_score, recall_score, f1_score, roc_auc_score, accuracy_score, classification_report
 from collections import Counter
-from sklearn.model_selection import KFold, StratifiedKFold, train_test_split, cross_val_score
+from sklearn.model_selection import KFold, StratifiedKFold, train_test_split, cross_val_score, GridSearchCV
 from sklearn.preprocessing import RobustScaler
 from scipy.stats import norm
 
@@ -210,4 +210,43 @@ for key, value in classifiers.items():
     value.fit(nd_Xtrain, nd_Ytrain)
     score = cross_val_score(value, nd_Xtest, nd_Ytest, cv=5)
     print(f"{key} - {round(score.mean(),4)} - {round(score.max(),4)}")
+# %%
+log_reg_params = {
+    "penalty": ["l1", "l2"],
+    "C": [0.001, 0.01, 0.1, 1, 10, 100, 1000]
+}
+knearest_params = {
+    "n_neighbors": list(range(2, 5, 1)),
+    "algorithm": ["auto", "ball_tree", "kd_tree", "brute"]
+}
+svc_params = {
+    "C": [0.5, 0.7, 0.9, 1],
+    "kernel": ["rbf", "poly", "sigmoid", "linear"]
+}
+decision_tree_params = {
+    "criterion": ["gini", "entropy"],
+    "max_depth": list(range(2, 5, 1)),
+    "min_samples_leaf": list(range(5, 8, 1))
+}
+
+# %%
+grid_log_reg = GridSearchCV(LogisticRegression(), log_reg_params)
+grid_knearest = GridSearchCV(KNeighborsClassifier(), knearest_params)
+grid_svc = GridSearchCV(SVC(), svc_params)
+grid_decision_tree = GridSearchCV(
+    DecisionTreeClassifier(), decision_tree_params)
+grid_log_reg.fit(nd_Xtrain, nd_Ytrain)
+grid_knearest.fit(nd_Xtrain, nd_Ytrain)
+grid_svc.fit(nd_Xtrain, nd_Ytrain)
+grid_decision_tree.fit(nd_Xtrain, nd_Ytrain)
+# %%
+log_reg = grid_log_reg.best_estimator_
+knearest = grid_knearest.best_estimator_
+svc = grid_svc.best_estimator_
+decision_tree = grid_log_reg.best_estimator_
+# %%
+print(f"log reg - {log_reg.score(nd_Xtrain, nd_Ytrain)}")
+print(f"k nearest - {knearest.score(nd_Xtrain, nd_Ytrain)}")
+print(f"SVC - {svc.score(nd_Xtrain, nd_Ytrain)}")
+print(f"decision tree - {decision_tree.score(nd_Xtrain, nd_Ytrain)}")
 # %%
