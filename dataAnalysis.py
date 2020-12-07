@@ -26,6 +26,7 @@ from sklearn.metrics import precision_score, recall_score, f1_score, roc_auc_sco
 from collections import Counter
 from sklearn.model_selection import KFold, StratifiedKFold
 from sklearn.preprocessing import RobustScaler
+from scipy.stats import norm
 
 # %%
 dataset = pd.read_csv('./dataset/creditcard.csv')
@@ -82,6 +83,7 @@ plt.show()
 positive_corr = ["V2", "V4", "V11", "V19"]
 negative_corr = ["V10", "V12", "V14", "V16"]
 # %%
+# positive corr
 f, axes = plt.subplots(ncols=4, figsize=(20, 4))
 f.suptitle("Positive Correlation")
 for i, feature in enumerate(positive_corr):
@@ -89,6 +91,7 @@ for i, feature in enumerate(positive_corr):
     axes[i].set_title("Class VS " + feature)
 
 # %%
+# negative corr
 f, axes = plt.subplots(ncols=4, figsize=(20, 4))
 f.suptitle("Negative Correlation")
 for i, feature in enumerate(negative_corr):
@@ -96,4 +99,20 @@ for i, feature in enumerate(negative_corr):
     axes[i].set_title("Class VS " + feature)
 # %%
 corr['Class'].sort_values()
+# %%
+# positive norm dist
+f, axes = plt.subplots(ncols=4, figsize=(20, 4))
+f.suptitle("Normal Distribution")
+for i, feature in enumerate(positive_corr):
+    fraud_dist = nd_dataset[feature].loc[nd_dataset["Class"] == 1].values
+    sns.distplot(fraud_dist, ax=axes[i], fit=norm)
+    axes[i].set_title(feature+" Distribution")
+# %%
+# negative norm dist
+f, axes = plt.subplots(ncols=4, figsize=(20, 4))
+f.suptitle("Normal Distribution")
+for i, feature in enumerate(negative_corr):
+    fraud_dist = nd_dataset[feature].loc[nd_dataset["Class"] == 1].values
+    sns.distplot(fraud_dist, ax=axes[i], fit=norm)
+    axes[i].set_title(feature+" Distribution")
 # %%
