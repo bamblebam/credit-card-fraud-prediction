@@ -12,9 +12,10 @@ From the confusion matrix it is clear that the prediction for majority of non fr
 Since the dataset is imbalanced we will need to perform some balancing techniques so that our model doesn't just assume that it is not a fraud.  
 First since the Time and Amount column have not been dimensionally reduced or scaled we scale it using RobustScaler.  
 Looking at the heatmap we can infer that V2,V4,V11,V19 are positively correlated while V10,V12,V14,V16 are negatively correlated.  
-<!-- <p align="center">
+ <p align="center">
   <img src="./images/heatmap.png" />  
-</p>   -->
+</p> 
+
 After removing the outliers 852 instances remain out of 984 this may or may not cause data loss.  
 After using a bunch of classifiers we get the cross_val_score as:-
 1. Logistic Regression: 89.45%
@@ -30,4 +31,13 @@ After hyperparameter optimization using GridSearchCV the scores are:-
 3. Support Vector Classifier: 94.71%
 4. Decision Tree Classifier: 95.59%
 
-Looking at the scores we find that KNN give the best accuracy followed by Logistic Regression.
+Looking at the scores we find that KNN give the best accuracy followed by Logistic Regression.  
+
+These scores were achieved using the normally distributed dataset.  
+
+Here is the confusion matrices for the different classifiers based on normally distributed test data:-
+ <p align="center">
+  <img src="./images/confmat_nd.png" />  
+</p>  
+
+From hear we can see that both KNN and SVC have same accuracy but KNN is better suited as it correctly classifies more fraudulent transactions. Though the results may differ when the complete dataset is used.
