@@ -22,7 +22,7 @@ from imblearn.pipeline import make_pipeline as imbalanced_make_pipeline
 from imblearn.over_sampling import SMOTE
 from imblearn.under_sampling import NearMiss
 from imblearn.metrics import classification_report_imbalanced
-from sklearn.metrics import precision_score, recall_score, f1_score, roc_auc_score, accuracy_score, classification_report
+from sklearn.metrics import precision_score, recall_score, f1_score, roc_auc_score, accuracy_score, classification_report, confusion_matrix, plot_confusion_matrix
 from collections import Counter
 from sklearn.model_selection import KFold, StratifiedKFold, train_test_split, cross_val_score, GridSearchCV
 from sklearn.preprocessing import RobustScaler
@@ -249,4 +249,16 @@ print(f"log reg - {log_reg.score(nd_Xtrain, nd_Ytrain)}")
 print(f"k nearest - {knearest.score(nd_Xtrain, nd_Ytrain)}")
 print(f"SVC - {svc.score(nd_Xtrain, nd_Ytrain)}")
 print(f"decision tree - {decision_tree.score(nd_Xtrain, nd_Ytrain)}")
+
+# %%
+f, axes = plt.subplots(ncols=2, nrows=2)
+f.suptitle("Confusion Matrices")
+plot_confusion_matrix(log_reg, nd_Xtest, nd_Ytest, ax=axes[0][0])
+axes[0][0].set_title("Logistic Regression")
+plot_confusion_matrix(knearest, nd_Xtest, nd_Ytest, ax=axes[0][1])
+axes[0][1].set_title("KNN")
+plot_confusion_matrix(svc, nd_Xtest, nd_Ytest, ax=axes[1][0])
+axes[1][0].set_title("SVC")
+plot_confusion_matrix(decision_tree, nd_Xtest, nd_Ytest, ax=axes[1][1])
+axes[1][1].set_title("Decision Tree")
 # %%
