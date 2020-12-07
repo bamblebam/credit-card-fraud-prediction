@@ -14,4 +14,5 @@ First since the Time and Amount column have not been dimensionally reduced or sc
 Looking at the heatmap we can infer that V2,V4,V11,V19 are positively correlated while V10,V12,V14,V16 are negatively correlated.  
 <p align="center">
   <img src="./images/heatmap.png" />  
-</p>
+</p>  
+After removing the outliers 852 instances remain out of 984 this may or may not cause data loss.
