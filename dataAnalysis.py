@@ -116,3 +116,56 @@ for i, feature in enumerate(negative_corr):
     sns.distplot(fraud_dist, ax=axes[i], fit=norm)
     axes[i].set_title(feature+" Distribution")
 # %%
+# positive outlier removal
+for i, feature in enumerate(positive_corr):
+    fraud_dist = nd_dataset[feature].loc[nd_dataset["Class"] == 1].values
+    q25, q75 = np.percentile(fraud_dist, 25), np.percentile(fraud_dist, 75)
+    iqr = q75-q25
+    cutoff = iqr*1.5
+    upper_limit = q75+cutoff
+    lower_limit = q25-cutoff
+    outlier_list = [x for x in fraud_dist if x <
+                    lower_limit or x > upper_limit]
+    nd_dataset = nd_dataset.drop(nd_dataset[(nd_dataset[feature] > upper_limit) | (
+        nd_dataset[feature] < lower_limit)].index)
+    print(f"Lower limit {lower_limit}")
+    print(f"Upper limit {upper_limit}")
+    print(outlier_list)
+    print(f"Outliers removed {len(outlier_list)}")
+    print("\n\n")
+
+# %%
+# negative outlier removal
+for i, feature in enumerate(negative_corr):
+    fraud_dist = nd_dataset[feature].loc[nd_dataset["Class"] == 1].values
+    q25, q75 = np.percentile(fraud_dist, 25), np.percentile(fraud_dist, 75)
+    iqr = q75-q25
+    cutoff = iqr*1.5
+    upper_limit = q75+cutoff
+    lower_limit = q25-cutoff
+    outlier_list = [x for x in fraud_dist if x <
+                    lower_limit or x > upper_limit]
+    nd_dataset = nd_dataset.drop(nd_dataset[(nd_dataset[feature] > upper_limit) | (
+        nd_dataset[feature] < lower_limit)].index)
+    print(f"Lower limit {lower_limit}")
+    print(f"Upper limit {upper_limit}")
+    print(outlier_list)
+    print(f"Outliers removed {len(outlier_list)}")
+    print("\n\n")
+# %%
+print(f"Remainning instances {len(nd_dataset)}")
+# %%
+# positive corr new
+f, axes = plt.subplots(ncols=4, figsize=(20, 4))
+f.suptitle("Positive Correlation")
+for i, feature in enumerate(positive_corr):
+    sns.boxplot(x="Class", y=feature, data=nd_dataset, ax=axes[i])
+    axes[i].set_title("Reduction " + feature)
+# %%
+# negative corr new
+f, axes = plt.subplots(ncols=4, figsize=(20, 4))
+f.suptitle("Negative Correlation")
+for i, feature in enumerate(negative_corr):
+    sns.boxplot(x="Class", y=feature, data=nd_dataset, ax=axes[i])
+    axes[i].set_title("Reduction " + feature)
+# %%
