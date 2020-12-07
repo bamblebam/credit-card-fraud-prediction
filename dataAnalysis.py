@@ -169,3 +169,26 @@ for i, feature in enumerate(negative_corr):
     sns.boxplot(x="Class", y=feature, data=nd_dataset, ax=axes[i])
     axes[i].set_title("Reduction " + feature)
 # %%
+nd_X = nd_dataset.drop("Class", axis=1)
+nd_Y = nd_dataset["Class"]
+# %%
+X_Tsne = TSNE(n_components=2, random_state=42).fit_transform(nd_X.values)
+X_Pca = PCA(n_components=2, random_state=42).fit_transform(nd_X.values)
+X_Svd = TruncatedSVD(n_components=2, random_state=42,
+                     algorithm="randomized").fit_transform(nd_X.values)
+# %%
+cluster_list = [X_Tsne, X_Pca, X_Svd]
+# %%
+f, axes = plt.subplots(ncols=3, figsize=(24, 3))
+blue = mpatches.Patch(color="blue", label="normal")
+red = mpatches.Patch(color="red", label="fraud")
+f.suptitle("Different Clusters")
+for i, cluster in enumerate(cluster_list):
+    axes[i].scatter(cluster[:, 0], cluster[:, 1], c=(nd_Y == 0),
+                    cmap="coolwarm", label="normal", linewidths=2)
+    axes[i].scatter(cluster[:, 0], cluster[:, 1], c=(nd_Y == 1),
+                    cmap="coolwarm", label="fraud", linewidths=2)
+    axes[i].grid(True)
+    axes[i].legend(handles=[blue, red])
+
+# %%
