@@ -15,4 +15,10 @@ Looking at the heatmap we can infer that V2,V4,V11,V19 are positively correlated
 <p align="center">
   <img src="./images/heatmap.png" />  
 </p>  
-After removing the outliers 852 instances remain out of 984 this may or may not cause data loss.
+After removing the outliers 852 instances remain out of 984 this may or may not cause data loss.  
+After using a bunch of classifiers we get the cross_val_score as:-
+1. Logistic Regression: 89.45%
+2. K Nearest Neighbours: 90.62%
+3. Support Vector Classifier: 90.05%
+4. Decision Tree Classifier: 86.92%
+But if we look at the max score instead of the mean we find that Logistic Regression did the best along with KNN at 94.29%

@@ -24,7 +24,7 @@ from imblearn.under_sampling import NearMiss
 from imblearn.metrics import classification_report_imbalanced
 from sklearn.metrics import precision_score, recall_score, f1_score, roc_auc_score, accuracy_score, classification_report
 from collections import Counter
-from sklearn.model_selection import KFold, StratifiedKFold
+from sklearn.model_selection import KFold, StratifiedKFold, train_test_split, cross_val_score
 from sklearn.preprocessing import RobustScaler
 from scipy.stats import norm
 
@@ -191,4 +191,23 @@ for i, cluster in enumerate(cluster_list):
     axes[i].grid(True)
     axes[i].legend(handles=[blue, red])
 
+# %%
+nd_Xtrain, nd_Xtest, nd_Ytrain, nd_Ytest = train_test_split(
+    nd_X, nd_Y, random_state=42, test_size=0.2)
+nd_Xtrain = nd_Xtrain.values
+nd_Xtest = nd_Xtest.values
+nd_Ytrain = nd_Ytrain.values
+nd_Ytest = nd_Ytest.values
+# %%
+classifiers = {
+    "Logistic Reg": LogisticRegression(),
+    "K nearest": KNeighborsClassifier(),
+    "SVC": SVC(),
+    "Decision tree": DecisionTreeClassifier()
+}
+# %%
+for key, value in classifiers.items():
+    value.fit(nd_Xtrain, nd_Ytrain)
+    score = cross_val_score(value, nd_Xtest, nd_Ytest, cv=5)
+    print(f"{key} - {round(score.mean(),4)} - {round(score.max(),4)}")
 # %%
