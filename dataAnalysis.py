@@ -331,3 +331,44 @@ print(f"Precision score {np.mean(undersample_precision)}")
 print(f"F1 score {np.mean(undersample_f1)}")
 print(f"Accuracy score {np.mean(undersample_accuracy)}")
 # %%
+knearest_undersample_accuracy = []
+knearest_undersample_precision = []
+knearest_undersample_recall = []
+knearest_undersample_f1 = []
+knearest_undersample_auc = []
+# %%
+for train_index, test_index in SKfold.split(X_undersample_train, Y_undersample_train):
+    undersample_pipeline = imbalanced_make_pipeline(
+        NearMiss(sampling_strategy="majority"), knearest)
+    undersample_model = undersample_pipeline.fit(
+        X_undersample_train[train_index], Y_undersample_train[train_index])
+    undersample_prediction = undersample_model.predict(
+        X_undersample_train[test_index])
+    knearest_undersample_accuracy.append(undersample_pipeline.score(
+        og_X_train[test_index], og_Y_train[test_index]))
+    knearest_undersample_precision.append(precision_score(
+        Y_undersample_train[test_index], undersample_prediction))
+    knearest_undersample_recall.append(recall_score(
+        Y_undersample_train[test_index], undersample_prediction))
+    knearest_undersample_f1.append(
+        f1_score(Y_undersample_train[test_index], undersample_prediction))
+    knearest_undersample_auc.append(roc_auc_score(
+        Y_undersample_train[test_index], undersample_prediction))
+
+# %%
+knearest_Y_pred = knearest.predict(nd_Xtrain)
+
+# %%
+print("non cross val values for KNN")
+print(f"Recall score {recall_score(nd_Ytrain,knearest_Y_pred)}")
+print(f"Precision score {precision_score(nd_Ytrain,knearest_Y_pred)}")
+print(f"F1 score {f1_score(nd_Ytrain,knearest_Y_pred)}")
+print(f"Accuracy score {accuracy_score(nd_Ytrain,knearest_Y_pred)}")
+# %%
+print("cross val values for KNN")
+print(f"Recall score {np.mean(knearest_undersample_recall)}")
+print(f"Precision score {np.mean(knearest_undersample_precision)}")
+print(f"F1 score {np.mean(knearest_undersample_f1)}")
+print(f"Accuracy score {np.mean(knearest_undersample_accuracy)}")
+
+# %%
