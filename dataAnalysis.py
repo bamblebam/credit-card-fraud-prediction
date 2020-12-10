@@ -24,7 +24,7 @@ from imblearn.under_sampling import NearMiss
 from imblearn.metrics import classification_report_imbalanced
 from sklearn.metrics import precision_score, recall_score, f1_score, roc_auc_score, accuracy_score, classification_report, confusion_matrix, plot_confusion_matrix
 from collections import Counter
-from sklearn.model_selection import KFold, StratifiedKFold, train_test_split, cross_val_score, GridSearchCV
+from sklearn.model_selection import KFold, StratifiedKFold, train_test_split, cross_val_score, GridSearchCV, cross_val_predict
 from sklearn.preprocessing import RobustScaler
 from scipy.stats import norm
 
@@ -261,6 +261,16 @@ plot_confusion_matrix(svc, nd_Xtest, nd_Ytest, ax=axes[1][0])
 axes[1][0].set_title("SVC")
 plot_confusion_matrix(decision_tree, nd_Xtest, nd_Ytest, ax=axes[1][1])
 axes[1][1].set_title("Decision Tree")
+
+# %%
+log_reg_pred = cross_val_predict(
+    log_reg, nd_Xtrain, nd_Xtest, cv=5, method="decision_function")
+knearest_pred = cross_val_predict(knearest, nd_Xtrain, nd_Xtest, cv=5)
+svc_pred = cross_val_predict(
+    svc, nd_Xtrain, nd_Xtest, cv=5, method="decision_function")
+decision_tree_pred = cross_val_predict(
+    decision_tree, nd_Xtrain, nd_Xtest, cv=5)
+
 # %%
 X_undersample = dataset.drop("Class", axis=1)
 Y_undersample = dataset["Class"]

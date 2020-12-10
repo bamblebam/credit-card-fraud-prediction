@@ -30,4 +30,10 @@ After hyperparameter optimization using GridSearchCV the scores are:-
 3. Support Vector Classifier: 94.71%
 4. Decision Tree Classifier: 95.59%
 
-Looking at the scores we find that KNN give the best accuracy followed by Logistic Regression.
+The ROC scores are:-
+1. Logistic Regression: 97.81%
+2. K Nearest Neighbours: 93.10%
+3. Support Vector Classifier: 97.68%
+4. Decision Tree Classifier: 94.18%
+
+Looking at the scores we find that KNN give the best accuracy followed by Logistic Regression. But Logistic Regression had the highest ROC score.  
