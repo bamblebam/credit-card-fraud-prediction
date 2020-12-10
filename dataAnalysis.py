@@ -262,3 +262,40 @@ axes[1][0].set_title("SVC")
 plot_confusion_matrix(decision_tree, nd_Xtest, nd_Ytest, ax=axes[1][1])
 axes[1][1].set_title("Decision Tree")
 # %%
+X_undersample = dataset.drop("Class", axis=1)
+Y_undersample = dataset["Class"]
+# %%
+for train_index, test_index in SKfold.split(X_undersample, Y_undersample):
+    X_undersample_train, X_undersample_test = X_undersample.iloc[
+        train_index], X_undersample.iloc[test_index]
+    Y_undersample_train, Y_undersample_test = Y_undersample.iloc[
+        train_index], Y_undersample.iloc[test_index]
+X_undersample_train = X_undersample_train.values
+X_undersample_test = X_undersample_test.values
+Y_undersample_train = Y_undersample_train.values
+Y_undersample_test = Y_undersample_test.values
+# %%
+undersample_accuracy = []
+undersample_precision = []
+undersample_recall = []
+undersample_f1 = []
+undersample_auc = []
+# %%
+for train_index, test_index in SKfold.split(X_undersample_train, Y_undersample_train):
+    undersample_pipeline = imbalanced_make_pipeline(
+        NearMiss(sampling_strategy="majority"), log_reg)
+    undersample_model = undersample_pipeline.fit(
+        X_undersample_train[train_index], Y_undersample_train[train_index])
+    undersample_prediction = undersample_model.predict(
+        X_undersample_train[test_index])
+    undersample_accuracy.append(undersample_pipeline.score(
+        og_X_train[test_index], og_Y_train[test_index]))
+    undersample_precision.append(precision_score(
+        Y_undersample_train[test_index], undersample_prediction))
+    undersample_recall.append(recall_score(
+        Y_undersample_train[test_index], undersample_prediction))
+    undersample_f1.append(
+        f1_score(Y_undersample_train[test_index], undersample_prediction))
+    undersample_auc.append(roc_auc_score(
+        Y_undersample_train[test_index], undersample_prediction))
+# %%
