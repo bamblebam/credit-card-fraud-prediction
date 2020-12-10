@@ -264,12 +264,18 @@ axes[1][1].set_title("Decision Tree")
 
 # %%
 log_reg_pred = cross_val_predict(
-    log_reg, nd_Xtrain, nd_Xtest, cv=5, method="decision_function")
-knearest_pred = cross_val_predict(knearest, nd_Xtrain, nd_Xtest, cv=5)
+    log_reg, nd_Xtrain, nd_Ytrain, cv=5, method="decision_function")
+knearest_pred = cross_val_predict(knearest, nd_Xtrain, nd_Ytrain, cv=5)
 svc_pred = cross_val_predict(
-    svc, nd_Xtrain, nd_Xtest, cv=5, method="decision_function")
+    svc, nd_Xtrain, nd_Ytrain, cv=5, method="decision_function")
 decision_tree_pred = cross_val_predict(
-    decision_tree, nd_Xtrain, nd_Xtest, cv=5)
+    decision_tree, nd_Xtrain, nd_Ytrain, cv=5)
+
+# %%
+print(f"Logistic Regression {roc_auc_score(nd_Ytrain,log_reg_pred)}")
+print(f"KNN {roc_auc_score(nd_Ytrain,knearest_pred)}")
+print(f"SVC {roc_auc_score(nd_Ytrain,svc_pred)}")
+print(f"Decision Tree {roc_auc_score(nd_Ytrain,decision_tree_pred)}")
 
 # %%
 X_undersample = dataset.drop("Class", axis=1)
