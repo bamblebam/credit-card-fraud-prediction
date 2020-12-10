@@ -38,7 +38,7 @@ The ROC scores are:-
 4. Decision Tree Classifier: 0.9418
 
 Looking at the scores we find that KNN give the best accuracy followed by Logistic Regression. But Logistic Regression had the highest ROC score.  
-After using undersampling we find that the accuracy score for Logistic regression is only 76% and that for KNN is 67.45% while the recall scores are 0.9213 and 0.9341 respectively.
+After using undersampling we find that the accuracy score for Logistic regression is only 76% and that for KNN is 67.45% while the recall scores are 0.9213 and 0.9341 respectively.  
 Here is the confusion matrices for the different classifiers based on normally distributed test data:-
  <p align="center">
   <img src="./images/confmat_nd.png" />  
