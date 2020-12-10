@@ -314,4 +314,20 @@ for train_index, test_index in SKfold.split(X_undersample_train, Y_undersample_t
         f1_score(Y_undersample_train[test_index], undersample_prediction))
     undersample_auc.append(roc_auc_score(
         Y_undersample_train[test_index], undersample_prediction))
+
+# %%
+log_reg_Y_pred = log_reg.predict(nd_Xtrain)
+
+# %%
+print("non cross val values for log reg")
+print(f"Recall score {recall_score(nd_Ytrain,log_reg_Y_pred)}")
+print(f"Precision score {precision_score(nd_Ytrain,log_reg_Y_pred)}")
+print(f"F1 score {f1_score(nd_Ytrain,log_reg_Y_pred)}")
+print(f"Accuracy score {accuracy_score(nd_Ytrain,log_reg_Y_pred)}")
+# %%
+print("cross val values for log reg")
+print(f"Recall score {np.mean(undersample_recall)}")
+print(f"Precision score {np.mean(undersample_precision)}")
+print(f"F1 score {np.mean(undersample_f1)}")
+print(f"Accuracy score {np.mean(undersample_accuracy)}")
 # %%
