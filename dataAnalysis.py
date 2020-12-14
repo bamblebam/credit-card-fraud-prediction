@@ -372,3 +372,18 @@ print(f"F1 score {np.mean(knearest_undersample_f1)}")
 print(f"Accuracy score {np.mean(knearest_undersample_accuracy)}")
 
 # %%
+f, axes = plt.subplots(ncols=2, nrows=2)
+f.suptitle("Confusion Matrices")
+plot_confusion_matrix(log_reg, X_undersample_test,
+                      Y_undersample_test, ax=axes[0][0])
+axes[0][0].set_title("Logistic Regression")
+plot_confusion_matrix(knearest, X_undersample_test,
+                      Y_undersample_test, ax=axes[0][1])
+axes[0][1].set_title("KNN")
+plot_confusion_matrix(svc, X_undersample_test,
+                      Y_undersample_test, ax=axes[1][0])
+axes[1][0].set_title("SVC")
+plot_confusion_matrix(decision_tree, X_undersample_test,
+                      Y_undersample_test, ax=axes[1][1])
+axes[1][1].set_title("Decision Tree")
+# %%

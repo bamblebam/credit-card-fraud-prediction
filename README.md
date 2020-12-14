@@ -44,4 +44,9 @@ Here is the confusion matrices for the different classifiers based on normally d
   <img src="./images/confmat_nd.png" />  
 </p>  
 
-From hear we can see that both KNN and SVC have same accuracy but KNN is better suited as it correctly classifies more fraudulent transactions. Though the results may differ when the complete dataset is used.
+From hear we can see that both KNN and SVC have same accuracy but KNN is better suited as it correctly classifies more fraudulent transactions. Though the results may differ when the complete dataset is used.  
+ <p align="center">
+  <img src="./images/confmatUS.png" />  
+</p>  
+
+As it can be seen from the confusion matrix SVC and Logistic REgression are the best. Though Logistic regression has greater number of true positives.
