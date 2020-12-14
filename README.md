@@ -51,3 +51,8 @@ From hear we can see that both KNN and SVC have same accuracy but KNN is better 
 
 As it can be seen from the confusion matrix SVC and Logistic REgression are the best. Though Logistic regression has greater number of true positives.
 Upon using SMOTE Logistic regression performed lot better with an accuracy of 97.01% and the recall is 0.9137.  
+
+Confusion matrix for undersample tensorflow model  
+ <p align="center">
+  <img src="./images/confmatnnus.png" />  
+</p>   

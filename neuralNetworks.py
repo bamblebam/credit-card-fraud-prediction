@@ -35,6 +35,8 @@ from keras.layers import Activation, Dense
 from keras.optimizers import Adam
 from keras.metrics import categorical_crossentropy
 from keras.callbacks import ModelCheckpoint
+
+import itertools
 # %%
 dataset = pd.read_csv('./dataset/creditcard.csv')
 dataset.head()
@@ -95,6 +97,43 @@ undersample_model.summary()
 undersample_model.compile(
     Adam(lr=0.001), loss='sparse_categorical_crossentropy', metrics=["accuracy"])
 modelcheckpoint = ModelCheckpoint(
-    "models/undersample_model.h5", save_best_only=True)
+    "models/undersample_model.h5", save_best_only=True, monitor="val_acc")
 undersample_model.fit(nd_Xtrain, nd_Ytrain, validation_split=0.2, epochs=20,
                       batch_size=25, shuffle=True, verbose=2, callbacks=[modelcheckpoint])
+
+# %%
+undersample_pred = undersample_model.predict(og_X_test, verbose=2)
+# %%
+undersample_pred_classes = undersample_model.predict_classes(
+    og_X_test, verbose=2)
+# %%
+confmat = confusion_matrix(og_Y_test, undersample_pred_classes)
+print(confmat)
+# %%
+
+
+def plotTensorflowConfmat(confmat, classes):
+    plt.imshow(confmat, interpolation='nearest', cmap=plt.cm.Blues)
+    plt.title("Confusion Matrix")
+    plt.colorbar()
+    tick_marks = np.arange(len(classes))
+    plt.xticks(tick_marks, classes, rotation=45)
+    plt.yticks(tick_marks, classes)
+    plt.tight_layout()
+    plt.ylabel("True label")
+    plt.xlabel("Predicted label")
+    for i, j in itertools.product(range(confmat.shape[0]), range(confmat.shape[1])):
+        plt.text(j, i, format(confmat[i, j], '.2f'),
+                 horizontalalignment='center', color='black')
+
+
+# %%
+classes = ["Normal", "Fraud"]
+plotTensorflowConfmat(confmat, classes)
+
+# %%
+sm = SMOTE(sampling_strategy="minority", random_state=42)
+sm_X_train, sm_Y_train = sm.fit_sample(og_X_train, og_Y_train)
+# %%
+sm_X_train.shape
+# %%
