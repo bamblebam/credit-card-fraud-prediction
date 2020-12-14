@@ -55,9 +55,13 @@ Upon using SMOTE Logistic regression performed lot better with an accuracy of 97
 Confusion matrix for undersample tensorflow model  
  <p align="center">
   <img src="./images/confmatnnus.png" />  
-</p>   
+</p>  
+
+From the confusion matrix we can see that it performed well in case of fraud results but not so much in case of normal transactions. This model might be better when it is more important to determine the fraud transaction correctly.   
 
 Confusion matrix for SMOTE tensorflow model  
  <p align="center">
   <img src="./images/confmatnnsm.png" />  
 </p>   
+
+The model with the SMOTE performed execptionally well in case of normal transactions but not in case of fraud transactions. This might be due to the fact that the outliers were'nt removed from the dataset.
