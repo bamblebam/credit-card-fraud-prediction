@@ -56,3 +56,8 @@ Confusion matrix for undersample tensorflow model
  <p align="center">
   <img src="./images/confmatnnus.png" />  
 </p>   
+
+Confusion matrix for SMOTE tensorflow model  
+ <p align="center">
+  <img src="./images/confmatnnsm.png" />  
+</p>   

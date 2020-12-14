@@ -137,3 +137,27 @@ sm_X_train, sm_Y_train = sm.fit_sample(og_X_train, og_Y_train)
 # %%
 sm_X_train.shape
 # %%
+n_inputs = sm_X_train.shape[1]
+smote_model = Sequential([
+    Dense(n_inputs, input_shape=(n_inputs,), activation='relu'),
+    Dense(32, activation='relu'),
+    Dense(2, activation='softmax')
+])
+# %%
+smote_model.summary()
+# %%
+smote_model.compile(
+    Adam(lr=0.001), loss='sparse_categorical_crossentropy', metrics=['accuracy'])
+modelcheckpoint = ModelCheckpoint(
+    'models/smote_model.h5', save_best_only=True, monitor='val_acc')
+smote_model.fit(sm_X_train, sm_Y_train, validation_split=0.2, batch_size=25,
+                epochs=20, verbose=2, shuffle=True, callbacks=[modelcheckpoint])
+# %%
+smote_model.save('models/smote_model.h5')
+# %%
+smote_pred_classes = smote_model.predict_classes(og_X_test)
+# %%
+confmat = confusion_matrix(og_Y_test, smote_pred_classes)
+print(confmat)
+# %%
+plotTensorflowConfmat(confmat, classes)
