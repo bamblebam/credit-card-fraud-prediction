@@ -416,3 +416,7 @@ print(f"precision {np.mean(smote_log_precision)}")
 print(f"f1 {np.mean(smote_log_f1)}")
 print(f"auc {np.mean(smote_log_auc)}")
 # %%
+plot_confusion_matrix(log_reg_sm, og_X_train, og_Y_train)
+# %%
+plot_confusion_matrix(log_reg, og_X_train, og_Y_train)
+# %%
