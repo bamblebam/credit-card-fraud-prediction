@@ -386,4 +386,33 @@ axes[1][0].set_title("SVC")
 plot_confusion_matrix(decision_tree, X_undersample_test,
                       Y_undersample_test, ax=axes[1][1])
 axes[1][1].set_title("Decision Tree")
+
+# %%
+smote_log_accuracy = []
+smote_log_precision = []
+smote_log_recall = []
+smote_log_f1 = []
+smote_log_auc = []
+
+# %%
+log_reg_sm = GridSearchCV(LogisticRegression(), log_reg_params)
+# %%
+for train, test in SKfold.split(og_X_train, og_Y_train):
+    pipeline = imbalanced_make_pipeline(
+        SMOTE(sampling_strategy="minority"), log_reg_sm)
+    model = pipeline.fit(og_X_train[train], og_Y_train[train])
+    best_estimator = grid_log_reg.best_estimator_
+    pred = model.predict(og_X_train[test])
+    smote_log_accuracy.append(pipeline.score(
+        og_X_train[test], og_Y_train[test]))
+    smote_log_precision.append(precision_score(og_Y_train[test], pred))
+    smote_log_recall.append(recall_score(og_Y_train[test], pred))
+    smote_log_f1.append(f1_score(og_Y_train[test], pred))
+    smote_log_auc.append(roc_auc_score(og_Y_train[test], pred))
+# %%
+print(f"accuracy {np.mean(smote_log_accuracy)}")
+print(f"recall {np.mean(smote_log_recall)}")
+print(f"precision {np.mean(smote_log_precision)}")
+print(f"f1 {np.mean(smote_log_f1)}")
+print(f"auc {np.mean(smote_log_auc)}")
 # %%
