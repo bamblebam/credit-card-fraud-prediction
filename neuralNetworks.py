@@ -177,3 +177,51 @@ smote_df.head()
 # %%
 smote_df = smote_df.sample(frac=1, random_state=42)
 # %%
+corr = smote_df.corr()
+sns.heatmap(corr, cmap='coolwarm_r', annot_kws={'size': 20})
+plt.show()
+# %%
+corr["Class"].sort_values()
+# %%
+negative_corr = [13, 11, 9, 15]
+positive_corr = [3, 10]
+# %%
+f, axes = plt.subplots(ncols=4, figsize=(20, 4))
+f.suptitle("Negative Corr")
+for i, feature in enumerate(negative_corr):
+    sns.boxplot(x="Class", y=feature, data=smote_df, ax=axes[i])
+    axes[i].set_title(feature)
+# %%
+f, axes = plt.subplots(ncols=2, figsize=(20, 4))
+f.suptitle("Positive Corr")
+for i, feature in enumerate(positive_corr):
+    sns.boxplot(x="Class", y=feature, data=smote_df, ax=axes[i])
+    axes[i].set_title(feature)
+# %%
+for i, feature in enumerate(negative_corr):
+    fraud_dist = smote_df[feature].loc[smote_df["Class"] == 1].values
+    q25, q75 = np.percentile(fraud_dist, 25), np.percentile(fraud_dist, 75)
+    iqr = q75-q25
+    cutoff = iqr*1.5
+    upper_limit, lower_limit = q75+cutoff, q25-cutoff
+    outlier_list = [x for x in fraud_dist if x <
+                    lower_limit or x > upper_limit]
+    smote_df = smote_df.drop(smote_df[(smote_df[feature] > upper_limit) | (
+        smote_df[feature] < lower_limit)].index)
+    print(f"outliers removed {len(outlier_list)}")
+
+# %%
+for i, feature in enumerate(positive_corr):
+    fraud_dist = smote_df[feature].loc[smote_df["Class"] == 1].values
+    q25, q75 = np.percentile(fraud_dist, 25), np.percentile(fraud_dist, 75)
+    iqr = q75-q25
+    cutoff = iqr*1.5
+    upper_limit, lower_limit = q75+cutoff, q25-cutoff
+    outlier_list = [x for x in fraud_dist if x <
+                    lower_limit or x > upper_limit]
+    smote_df = smote_df.drop(smote_df[(smote_df[feature] > upper_limit) | (
+        smote_df[feature] < lower_limit)].index)
+    print(f"outliers removed {len(outlier_list)}")
+# %%
+smote_df.shape
+# %%
