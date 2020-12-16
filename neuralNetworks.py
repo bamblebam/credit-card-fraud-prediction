@@ -231,6 +231,8 @@ smote_Y_train = smote_df["Class"]
 n_inputs = smote_X_train.shape[1]
 smote_model = Sequential([
     Dense(n_inputs, input_shape=(n_inputs,), activation='relu'),
+    Dense(64, activation='relu'),
+    Dense(32, activation='relu'),
     Dense(32, activation='relu'),
     Dense(2, activation='softmax')
 ])
