@@ -65,3 +65,8 @@ Confusion matrix for SMOTE tensorflow model
 </p>   
 
 The model with the SMOTE performed execptionally well in case of normal transactions but not in case of fraud transactions. This might be due to the fact that the outliers were'nt removed from the dataset.
+
+ <p align="center">
+  <img src="./images/smote_outlier.png" />  
+</p>  
+Even after the outlier removal the results didnt change much.
