@@ -225,3 +225,25 @@ for i, feature in enumerate(positive_corr):
 # %%
 smote_df.shape
 # %%
+smote_X_train = smote_df.drop(["Class"], axis=1)
+smote_Y_train = smote_df["Class"]
+# %%
+n_inputs = smote_X_train.shape[1]
+smote_model = Sequential([
+    Dense(n_inputs, input_shape=(n_inputs,), activation='relu'),
+    Dense(32, activation='relu'),
+    Dense(2, activation='softmax')
+])
+# %%
+smote_model.summary()
+# %%
+smote_model.compile(
+    Adam(lr=0.001), loss="sparse_categorical_crossentropy", metrics=["accuracy"])
+modelcheckpoint = ModelCheckpoint(
+    "models/smote_outliers_removed.h5", save_best_only=True, monitor="val_acc")
+smote_model.fit(smote_X_train, smote_Y_train, validation_split=0.2,
+                shuffle=True, batch_size=25, epochs=20, callbacks=[modelcheckpoint])
+
+# %%
+smote_model.save("models/smote_outliers_removed.h5")
+# %%
