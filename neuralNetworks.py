@@ -161,3 +161,19 @@ confmat = confusion_matrix(og_Y_test, smote_pred_classes)
 print(confmat)
 # %%
 plotTensorflowConfmat(confmat, classes)
+# %%
+sm2 = SMOTE(sampling_strategy="minority", random_state=42)
+# %%
+sm2_X_train, sm2_Y_train = sm2.fit_sample(og_X_train, og_Y_train)
+sm2_X_train = pd.DataFrame(sm2_X_train)
+sm2_X_train.head()
+# %%
+sm2_Y_train = pd.DataFrame(sm2_Y_train, columns=["Class"])
+sm2_Y_train.head()
+# %%
+smote_df = pd.concat([sm2_X_train, sm2_Y_train], axis=1)
+smote_df.head()
+
+# %%
+smote_df = smote_df.sample(frac=1, random_state=42)
+# %%
