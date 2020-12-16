@@ -46,7 +46,7 @@ Here is the confusion matrices for the different classifiers based on normally d
 
 From hear we can see that both KNN and SVC have same accuracy but KNN is better suited as it correctly classifies more fraudulent transactions. Though the results may differ when the complete dataset is used.  
  <p align="center">
-  <img src="./images/confmatus.png" />  
+  <img src="./images/confmatUS.png" />  
 </p>  
 
 As it can be seen from the confusion matrix SVC and Logistic REgression are the best. Though Logistic regression has greater number of true positives.
@@ -65,3 +65,8 @@ Confusion matrix for SMOTE tensorflow model
 </p>   
 
 The model with the SMOTE performed execptionally well in case of normal transactions but not in case of fraud transactions. This might be due to the fact that the outliers were'nt removed from the dataset.
+
+ <p align="center">
+  <img src="./images/smote_outlier.png" />  
+</p>  
+Even after the outlier removal the results didnt change much. Though the overall model could be improved by adding more layers.
