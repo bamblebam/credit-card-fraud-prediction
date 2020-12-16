@@ -69,4 +69,4 @@ The model with the SMOTE performed execptionally well in case of normal transact
  <p align="center">
   <img src="./images/smote_outlier.png" />  
 </p>  
-Even after the outlier removal the results didnt change much.
+Even after the outlier removal the results didnt change much. Though the overall model could be improved by adding more layers.
