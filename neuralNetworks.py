@@ -247,3 +247,11 @@ smote_model.fit(smote_X_train, smote_Y_train, validation_split=0.2,
 # %%
 smote_model.save("models/smote_outliers_removed.h5")
 # %%
+smote_pred_classes = smote_model.predict_classes(og_X_test)
+# %%
+confmat = confusion_matrix(og_Y_test, smote_pred_classes)
+print(confmat)
+# %%
+classes = ["normal", "fraud"]
+plotTensorflowConfmat(confmat, classes)
+# %%
