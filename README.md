@@ -70,3 +70,14 @@ The model with the SMOTE performed execptionally well in case of normal transact
   <img src="./images/smote_outlier.png" />  
 </p>  
 Even after the outlier removal the results didnt change much. Though the overall model could be improved by adding more layers.
+
+# Instructions to replicate:
+This project is done in VS code python interactive shell so it may give errors in other IDE's and code editors. If you are running this on VS code just execute the cells you want to see the output off. **Model building and preprocessing might take time ~10 mins.**  
+If you want to just predict use the models in the [models](models) directory. They are tensorflow/keras models so use that to load it.
+
+# Details:
+* Name: Burhanuddin Rangwala
+* Roll No: 1911109
+* Class: B
+* Course: Computer Engineering
+* College: KJ Somaiya College of Engineering
