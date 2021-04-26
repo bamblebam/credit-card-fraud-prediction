@@ -46,7 +46,7 @@ dataset.head()
 X = dataset.drop(['Class'], axis=1)
 Y = dataset['Class']
 # %%
-SKfold = StratifiedKFold(random_state=42)
+SKfold = StratifiedKFold()
 for train_index, test_index in SKfold.split(X, Y):
     og_X_train, og_X_test = X.iloc[train_index], X.iloc[test_index]
     og_Y_train, og_Y_test = Y.iloc[train_index], Y.iloc[test_index]
